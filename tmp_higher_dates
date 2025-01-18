@@ -1,0 +1,10 @@
+with tmp as
+(
+select id, temperature, recordDate, nvl(lag(temperature) over (order by recordDate),0) prev_temperature,
+lag(recordDate) over (order by recordDate) prev_recordDate
+ from Weather) 
+ select tmp.id
+ from tmp
+where temperature>prev_temperature
+and (recordDate-prev_recordDate)=1
+order by 1;

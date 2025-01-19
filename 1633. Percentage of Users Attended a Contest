@@ -1,0 +1,9 @@
+with total as
+(select count(*) as cnt from Users)
+select contest_id, round((count(distinct r.user_id)/t.cnt)*100,2) as percentage from 
+Register as r
+  join Users as u
+on r.user_id=u.user_id
+join total t
+group by contest_id
+order by 2 desc,1
